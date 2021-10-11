@@ -9,4 +9,12 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  @Get('/world')
+  getWorld() {
+    return 'world!'
+  }
+  @Get('/json')
+  getJson() {
+    return {foo: 'baz', bar: 14}
+  }
 }
