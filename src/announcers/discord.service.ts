@@ -14,13 +14,16 @@ export class DiscordService implements Announcer {
     if (!!DISCORD_BOT_TOKEN) {
       this.client = new Discord.Client();
       const loggedIn = await this.client.login(DISCORD_BOT_TOKEN);
+      console.log('logged in', loggedIn);
+      console.log(this.client.channels.cache.size);
       const channel = this.client.channels.cache.find(
         (x: any) => x.name === DISCORD_CHANNEL,
       );
-      if (channel.isText()) {
+      console.log(channel);
+      if (channel && channel.isText()) {
         this.channel = channel as Discord.TextChannel;
+        return true;
       }
-      return true;
     }
     return false;
   }
