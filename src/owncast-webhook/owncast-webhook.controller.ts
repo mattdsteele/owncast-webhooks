@@ -1,11 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Announcer, AnnouncerToken } from 'src/announcers/announcer.service';
 
 @Controller('owncast-webhook')
 export class OwncastWebhookController {
-    @Post()
-    handleWebhook(@Body() webhook: OwncastWebhook) {
-        console.log('Handled webhook');
-        console.log(webhook);
-        return 'Handled webhook';
+  constructor(@Inject(AnnouncerToken) private announcer: Announcer) {}
+  @Post()
+  handleWebhook(@Body() webhook: OwncastWebhook) {
+    if (this.announcer.isSupported(webhook)) {
+      this.announcer.announce(webhook);
     }
+  }
 }
