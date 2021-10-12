@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Announcer } from './announcers/announcer.service';
-import { DiscordService } from './announcers/discord.service';
-import { MastodonService } from './announcers/mastodon.service';
+import { Announcer } from './announcer.service';
+import { DiscordService } from './discord.service';
+import { MastodonService } from './mastodon.service';
 
 @Injectable()
 export class CompositeAnnouncer implements Announcer {
