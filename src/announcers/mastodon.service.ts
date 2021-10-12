@@ -38,11 +38,13 @@ export class MastodonService implements Announcer {
 ${OWNCAST_SERVER_URL}`,
         },
         (err, resp) => {
+          console.log('got message back');
           if (err) {
+            console.error('failed', err);
             rej(err);
           }
+          console.log('success', resp);
           res();
-          console.log(resp);
         },
       );
     });
