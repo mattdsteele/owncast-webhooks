@@ -7,7 +7,11 @@ export class OwncastWebhookController {
   @Post()
   handleWebhook(@Body() webhook: OwncastWebhook) {
     if (this.announcer.isSupported(webhook)) {
+        console.log('is supported')
       this.announcer.announce(webhook);
+    } else {
+        console.log('is not supported')
+
     }
   }
 }
