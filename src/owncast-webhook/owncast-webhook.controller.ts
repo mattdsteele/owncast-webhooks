@@ -5,10 +5,10 @@ import { Announcer, AnnouncerToken } from '../announcers/announcer.service';
 export class OwncastWebhookController {
   constructor(@Inject(AnnouncerToken) private announcer: Announcer) {}
   @Post()
-  handleWebhook(@Body() webhook: OwncastWebhook) {
+  async handleWebhook(@Body() webhook: OwncastWebhook) {
     if (this.announcer.isSupported(webhook)) {
         console.log('is supported')
-      this.announcer.announce(webhook);
+      await this.announcer.announce(webhook);
     } else {
         console.log('is not supported')
 
