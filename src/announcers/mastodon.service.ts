@@ -7,7 +7,7 @@ const { MASTODON_ACCESS_TOKEN, MASTODON_API_URL, OWNCAST_SERVER_URL } =
 @Injectable()
 export class MastodonService implements Announcer {
   private m: any;
-  isSupported(_webhook: OwncastWebhook): boolean {
+  async isSupported(_webhook: OwncastWebhook): Promise<boolean> {
     console.log('checking if supported');
     console.log(MASTODON_ACCESS_TOKEN, MASTODON_API_URL, OWNCAST_SERVER_URL);
     if (!!this.m) {
