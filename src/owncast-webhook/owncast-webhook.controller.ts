@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { Announcer, AnnouncerToken } from 'src/announcers/announcer.service';
+import { Announcer, AnnouncerToken } from '../announcers/announcer.service';
 
 @Controller('owncast-webhook')
 export class OwncastWebhookController {
