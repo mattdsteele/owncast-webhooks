@@ -10,7 +10,7 @@ const channelList: string[] = DISCORD_CHANNEL.split(',');
 export class DiscordService implements Announcer {
   client: Discord.Client;
   channel: Discord.TextChannel;
-  postableChannels: Collection<String, Discord.TextChannel>;
+  postableChannels: Collection<String, Discord.Channel>;
   async isSupported(_webhook: OwncastWebhook): Promise<boolean> {
     if (!!this.client) {
       return true;
@@ -39,7 +39,7 @@ export class DiscordService implements Announcer {
     const message = `Started streaming: ${webhook.eventData.streamTitle}
 ${OWNCAST_SERVER_URL}`;
     console.log(`sending discord message to ${this.postableChannels.size} servers`);
-    await this.postableChannels.map(c => c.send(message));
+    await this.postableChannels.map((c: any) => c.send(message));
     console.log('sent');
 
   }
