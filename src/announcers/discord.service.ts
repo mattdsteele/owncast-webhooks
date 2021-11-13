@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Announcer } from './announcer.service';
+import { Collection } from '@discordjs/collection';
 import Discord = require('discord.js');
 const { DISCORD_BOT_TOKEN, DISCORD_CHANNEL, OWNCAST_SERVER_URL } = process.env;
 
@@ -23,7 +24,7 @@ export class DiscordService implements Announcer {
       const channel = this.client.channels.cache.find(
         (x: any) => channelList.includes(x.name)
       );
-      const allChannelsFound: any[] = this.client.channels.cache.filter(
+      const allChannelsFound: Collection<String, Discord.Channel> = this.client.channels.cache.filter(
         (x: any) => channelList.includes(x.name)
       );
       console.log(`all channels found size: ${allChannelsFound.length}`)
