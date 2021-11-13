@@ -9,6 +9,7 @@ const channelList: string[] = DISCORD_CHANNEL.split(',');
 export class DiscordService implements Announcer {
   client: Discord.Client;
   channel: Discord.TextChannel;
+  postableChannels: Discord.TextChannel[];
   async isSupported(_webhook: OwncastWebhook): Promise<boolean> {
     if (!!this.client) {
       return true;
@@ -22,18 +23,23 @@ export class DiscordService implements Announcer {
       const channel = this.client.channels.cache.find(
         (x: any) => channelList.includes(x.name)
       );
+      const allChannelsFound: any[] = this.client.channels.cache.filter(
+        (x: any) => channelList.includes(x.name)
+      );
+      console.log(`all channels found size: ${allChannelsFound.length}`)
       console.log(channel);
-      if (channel && channel.isText()) {
-        console.log('found and configured discord channel for', channel.name);
-        this.channel = channel as Discord.TextChannel;
-        return true;
-      }
+      // Cache all postable channels
+      this.postableChannels = allChannelsFound.filter(c => c.isText());
+      return this.postableChannels.length > 0;
     }
     return false;
   }
   async announce(webhook: OwncastWebhook): Promise<void> {
     const message = `Started streaming: ${webhook.eventData.streamTitle}
 ${OWNCAST_SERVER_URL}`;
-    await this.channel.send(message);
+    console.log(`sending discord message to ${this.postableChannels.length} servers`);
+    await this.postableChannels.map(c => c.send(message));
+    console.log('sent');
+
   }
 }
