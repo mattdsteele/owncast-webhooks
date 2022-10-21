@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AnnouncerToken } from './announcers/announcer.service';
 import { CompositeAnnouncer } from './announcers/composite-announcers.service';
-import { DiscordService } from './announcers/discord.service';
 import { MastodonService } from './announcers/mastodon.service';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OwncastWebhookController } from './owncast-webhook/owncast-webhook.controller';
+import { SlackService } from './announcers/slack.service';
+import { DiscordWebhookService } from './announcers/discord-webhook.service';
 
 @Module({
   imports: [],
@@ -13,8 +14,9 @@ import { OwncastWebhookController } from './owncast-webhook/owncast-webhook.cont
   providers: [
     AppService,
     { provide: AnnouncerToken, useClass: CompositeAnnouncer },
-    DiscordService,
+    DiscordWebhookService,
     MastodonService,
+    SlackService,
   ],
 })
 export class AppModule {}
