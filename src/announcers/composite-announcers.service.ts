@@ -11,12 +11,17 @@ export class CompositeAnnouncer implements Announcer {
     this.announcers = [discord, mastodon, slack];
   }
   async isSupported(_webhook: OwncastWebhook): Promise<boolean> {
-    if (_webhook.eventData.streamTitle.toLowerCase().includes('zwift')) {
+    console.log(`checking event: ${JSON.stringify(_webhook.eventData)}`);
+    if (this.isZwiftRace(_webhook.eventData)) {
       return true;
     }
     console.log('Not a Zwift stream, ignoring');
     return false;
   }
+  private isZwiftRace({streamTitle, name}: StreamStartedData) {
+    return streamTitle.toLowerCase().includes('zwift');
+  }
+
   async announce(webhook: OwncastWebhook): Promise<void> {
     await Promise.all(
       this.announcers.map(async (r) => {
