@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Announcer } from './announcer.service';
 import { DiscordWebhookService } from './discord-webhook.service';
-import { MastodonService } from './mastodon.service';
 import { SlackService } from './slack.service';
 
 @Injectable()
 export class CompositeAnnouncer implements Announcer {
   private announcers: Announcer[];
-  constructor(discord: DiscordWebhookService, mastodon: MastodonService, slack: SlackService) {
-    this.announcers = [discord, mastodon, slack];
+  constructor(discord: DiscordWebhookService, slack: SlackService) {
+    this.announcers = [discord, slack];
   }
   async isSupported(_webhook: OwncastWebhook): Promise<boolean> {
     console.log(`checking event: ${JSON.stringify(_webhook.eventData)}`);
