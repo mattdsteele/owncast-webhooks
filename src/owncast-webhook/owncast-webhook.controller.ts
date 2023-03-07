@@ -6,7 +6,7 @@ export class OwncastWebhookController {
   constructor(@Inject(AnnouncerToken) private announcer: Announcer) {}
   @Post()
   async handleWebhook(@Body() webhook: OwncastWebhook) {
-    if (this.announcer.isSupported(webhook)) {
+    if (await this.announcer.isSupported(webhook)) {
         console.log('is supported')
       await this.announcer.announce(webhook);
     } else {
